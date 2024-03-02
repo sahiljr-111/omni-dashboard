@@ -74,22 +74,20 @@ const Sellers = () => {
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
               {currentPeople.map((item, index) => (
-                <div key={item._id} className='m-3'>
-                  <tr >
-                    <td className="whitespace-nowrap px-12 py-4">
-                      <div className="text-sm text-gray-800 font-semibold">{item._id.substr(-4)}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4">
-                      <div className="text-sm  text-gray-800 font-semibold ">{item.name}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4">
-                      <div className="text-sm text-gray-800 font-semibold">{item.email}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-12 py-4">
-                      <div className="text-sm text-gray-800 font-semibold">{item.Contact}</div>
-                    </td>
-                  </tr>
-                </div>
+                <tr >
+                  <td className="whitespace-nowrap px-12 py-4">
+                    <div className="text-sm text-gray-800 font-semibold">{item._id.substr(-4)}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    <div className="text-sm  text-gray-800 font-semibold ">{item.name}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    <div className="text-sm text-gray-800 font-semibold">{item.email}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-12 py-4">
+                    <div className="text-sm text-gray-800 font-semibold">{item.Contact}</div>
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
