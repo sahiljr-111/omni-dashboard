@@ -15,6 +15,7 @@ const Home = () => {
     axios.get('http://localhost:8080/admin/allSeller', { headers: { "authentication": token } })
       .then((response) => {
         setSeller(response.data.data)
+        console.log('->response.data.data --->', response.data.data);
         setLoading(false)
       })
       .catch((error) => {

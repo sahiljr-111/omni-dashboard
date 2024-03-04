@@ -49,7 +49,7 @@ const Sellers = () => {
                   scope="col"
                   className="px-4 py-3.5 text-left text-sm  font-normal text-gray-500"
                 >
-                  <span className='font-bold'>Index</span>
+                  <span className='font-bold'>Id</span>
                 </th>
                 <th
                   scope="col"
@@ -75,16 +75,16 @@ const Sellers = () => {
             <tbody className="divide-y divide-gray-200 bg-white">
               {currentPeople.map((item, index) => (
                 <tr >
-                  <td className="whitespace-nowrap px-12 py-4">
+                  <td className="whitespace-nowrap py-5 px-3.5">
                     <div className="text-sm text-gray-800 font-semibold">{item._id.substr(-4)}</div>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    <div className="text-sm  text-gray-800 font-semibold ">{item.name}</div>
+                  <td className="whitespace-nowrap py-5 px-3.5">
+                    <div className="text-sm  text-gray-800 font-semibold ">{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</div>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
+                  <td className="whitespace-nowrap py-5 px-3.5">
                     <div className="text-sm text-gray-800 font-semibold">{item.email}</div>
                   </td>
-                  <td className="whitespace-nowrap px-12 py-4">
+                  <td className="whitespace-nowrap py-5 px-3.5">
                     <div className="text-sm text-gray-800 font-semibold">{item.Contact}</div>
                   </td>
                 </tr>
