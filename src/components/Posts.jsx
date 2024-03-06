@@ -1,18 +1,16 @@
 import axios from 'axios'
 import { ArrowUpRight } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 
-const Diamonds = () => {
+const Posts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const navigate = useNavigate()
 
   const [diamond, setDiamond] = useState([])
 
   useEffect(() => {
     var token = localStorage.getItem('token')
-    axios.get('http://localhost:8080/admin/viewDiamond', { headers: { "authentication": token } })
+    axios.get('http://localhost:8080/admin/viewPosts', { headers: { "authentication": token } })
       .then((response) => {
         console.log(response.data.data);
         setDiamond(response.data.data)
@@ -30,7 +28,7 @@ const Diamonds = () => {
       <section className="mx-auto max-w-7xl px-4 py-4">
         <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
           <div>
-            <h2 className="text-lg font-semibold">Diamonds </h2>
+            <h2 className="text-lg font-semibold">Posts </h2>
             <p className="mt-1 text-sm text-gray-700">
               This is a list of all employees. You can add new employees, edit or delete existing
               ones.
@@ -40,9 +38,8 @@ const Diamonds = () => {
             <button
               type="button"
               className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-              onClick={() => navigate('/diamonds/addDiamond')}
             >
-              Add new Diamond
+              Add new Posts
             </button>
           </div>
         </div>
@@ -52,15 +49,34 @@ const Diamonds = () => {
               <tr className=''>
                 <th
                   scope="col"
-                  className="px-3 py-3.5 text-left text-sm  font-normal text-gray-500"
+                  className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                 >
-                  <span className='font-bold'>Id</span>
+                  <span className='font-bold'>Seller Id</span>
                 </th>
                 <th
                   scope="col"
                   className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                 >
-                  <span className='font-bold'>Diamond Name</span>
+                  <span className='font-bold'>Bid Amount</span>
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
+                >
+                  <span className='font-bold'>Diamond Category</span>
+                </th>
+
+                <th
+                  scope="col"
+                  className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
+                >
+                  <span className='font-bold'>Rough Quality</span>
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
+                >
+                  <span className='font-bold'>Polish Type</span>
                 </th>
                 <th
                   scope="col"
@@ -68,18 +84,11 @@ const Diamonds = () => {
                 >
                   <span className='font-bold'>Polish Color</span>
                 </th>
-
                 <th
                   scope="col"
                   className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                 >
-                  <span className='font-bold'>Polish type</span>
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
-                >
-                  <span className='font-bold'>Quality of rough</span>
+                  <span className='font-bold'>StartDate / EndDate</span>
                 </th>
               </tr>
             </thead>
@@ -87,19 +96,25 @@ const Diamonds = () => {
               {currentPeople.map((item, index) => (
                 <tr className='hover:bg-gray-50 cursor-pointer'>
                   <td className="whitespace-nowrap py-5 px-3.5">
-                    <div className="text-sm text-gray-800 font-semibold">#{item._id.substr(-4)}</div>
+                    <div className="text-sm text-gray-800 font-semibold">#{item.seller_id.substr(-4)}</div>
                   </td>
                   <td className="whitespace-nowrap py-5 px-3.5">
-                    <div className="text-sm  text-gray-800 font-semibold ">{item.diamond_name.charAt(0).toUpperCase() + item.diamond_name.slice(1)}</div>
+                    <div className="text-sm text-gray-800 font-semibold">{item.bid_amount}</div>
                   </td>
                   <td className="whitespace-nowrap py-5 px-3.5">
-                    <div className="text-sm text-gray-800 font-semibold text-wrap">{item.polish_color.map((color) => (<span>{color}, </span>))}</div>
+                    <div className="text-sm  text-gray-800 font-semibold ">{item.diamond_category.charAt(0).toUpperCase() + item.diamond_category.slice(1)}</div>
                   </td>
                   <td className="whitespace-nowrap py-5 px-3.5">
-                    <div className="text-sm text-gray-800 font-semibold text-wrap">{item.polish_type.map((type) => (<span>{type}, </span>))}</div>
+                    <div className="text-sm text-gray-800 font-semibold">{item.rough_quality}</div>
                   </td>
                   <td className="whitespace-nowrap py-5 px-3.5">
-                    <div className="text-sm text-gray-800 font-semibold text-wrap ">{item.quality_of_rough.map((rough) => (<span>{rough}, </span>))}</div>
+                    <div className="text-sm text-gray-800 font-semibold">{item.polish_type}</div>
+                  </td>
+                  <td className="whitespace-nowrap py-5 px-3.5">
+                    <div className="text-sm text-gray-800 font-semibold">{item.polish_color}</div>
+                  </td>
+                  <td className="whitespace-nowrap py-5 px-3.5">
+                    <div className="text-sm text-gray-800 font-semibold">{item.start_date} / {item.end_date}</div>
                   </td>
                 </tr>
               ))}
@@ -138,4 +153,4 @@ const Diamonds = () => {
   )
 }
 
-export default Diamonds
+export default Posts

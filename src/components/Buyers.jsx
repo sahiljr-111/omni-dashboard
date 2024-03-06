@@ -1,9 +1,38 @@
 import axios from 'axios'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, SearchIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Buyers = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const navigate = useNavigate()
 
+  const [buyer, setBuyer] = useState([])
+
+  const [search, setSearch] = useState([])
+  const [searchText, setSearchText] = useState('')
+
+  useEffect(() => {
+    var token = localStorage.getItem('token')
+    axios.get('http://localhost:8080/admin/allBuyer', { headers: { "authentication": token } })
+      .then((response) => {
+        console.log(response.data.data);
+        setBuyer(response.data.data)
+        setSearch(response.data.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }, [])
+  const handleChange = (e) => {
+    setSearchText(e.target.value)
+    const filter = buyer.filter((buyer) => buyer.name.toLowerCase().includes(e.target.value.toLowerCase()))
+    setSearch(filter)
+  }
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPeople = search.slice(indexOfFirstItem, indexOfLastItem);
   return (
     <>
       <section className="mx-auto max-w-7xl px-4 py-4">
@@ -11,63 +40,98 @@ const Buyers = () => {
           <div>
             <h2 className="text-lg font-semibold">Buyer </h2>
             <p className="mt-1 text-sm text-gray-700">
-              This is a list of all employees. You can add new employees, edit or delete existing
-              ones.
+              This is a list of all sellers. You can see existing seller with clicking on any seller row after you edit or delete existing ones.
             </p>
           </div>
-          <div>
-            <button
-              type="button"
-              className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            >
-              Add new Buyer
-            </button>
-          </div>
-        </div>
-        <div className="mt-6 flex flex-col">
-          <span className='text-gray-600 text-end mx-2'></span>
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-              <div className="overflow-hidden border border-gray-200 md:rounded-lg">
-
-
-              </div>
+          <div className='flex items-center relative'>
+            <input
+              type="text"
+              placeholder='search buyer'
+              className="rounded-md px-3 py-2 text-sm font-semibold  shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              onChange={handleChange}
+              value={searchText}
+            />
+            <div className='absolute right-3'>
+              <SearchIcon size={20} />
             </div>
           </div>
         </div>
+        <div className="flex gap-2 mt-10 flex-wrap justify-evenly ">
+          <table className="min-w-full border rounded-lg overflow-hidden">
+            <thead className="bg-gray-200">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-4 py-3.5 text-left text-sm  font-normal text-gray-500"
+                >
+                  <span className='font-bold'>Id</span>
+                </th>
+                <th
+                  scope="col"
+                  className="px-4 py-3.5 text-left text-sm font-normal text-gray-500"
+                >
+                  <span className='font-bold'>Buyer Name</span>
+                </th>
+                <th
+                  scope="col"
+                  className="px-4 py-3.5 text-left text-sm font-normal text-gray-500"
+                >
+                  <span className='font-bold'>Buyer Email</span>
+                </th>
+
+                <th
+                  scope="col"
+                  className="px-6 py-3.5 text-left text-sm font-normal text-gray-500"
+                >
+                  <span className='font-bold'>Buyer Contact</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {currentPeople.map((item, index) => (
+                <tr key={item._id} className='hover:bg-gray-50 cursor-pointer' onClick={() => navigate(`/buyers/${item._id}`)}>
+                  <td className="whitespace-nowrap py-5 px-3.5">
+                    <div className="text-md text-gray-800 font-semibold">#{item._id.substr(-4)}</div>
+                  </td>
+                  <td className="whitespace-nowrap py-5 px-3.5">
+                    <div className="text-md  text-gray-800 font-semibold ">{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</div>
+                  </td>
+                  <td className="whitespace-nowrap py-5 px-3.5">
+                    <div className="text-md text-gray-800 font-semibold">{item.email}</div>
+                  </td>
+                  <td className="whitespace-nowrap py-5 px-3.5">
+                    <div className="text-md text-gray-800 font-semibold">{item.Contact}</div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <div className="flex items-center justify-center p-6">
-          <a href="#" className="mx-1 cursor-not-allowed text-sm font-semibold text-gray-900">
-            <span className="hidden lg:block">&larr; Previous</span>
-            <span className="block lg:hidden">&larr;</span>
-          </a>
-          <a
-            href="#"
-            className="mx-1 flex items-center rounded-md border border-gray-400 px-3 py-1 text-gray-900 hover:scale-105"
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="mx-1 cursor-pointer text-sm font-semibold text-gray-900"
           >
-            1
-          </a>
-          <a
-            href="#"
-            className="mx-1 flex items-center rounded-md border border-gray-400 px-3 py-1 text-gray-900 hover:scale-105"
+            &larr; Previous
+          </button>
+          {Array.from({ length: Math.ceil(buyer.length / itemsPerPage) }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => setCurrentPage(index + 1)}
+              className={`mx-1 flex items-center rounded-md border ${currentPage === index + 1 ? 'bg-black text-white' : 'border-gray-400'
+                } px-3 py-1 text-gray-900 hover:scale-105`}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === Math.ceil(buyer.length / itemsPerPage)}
+            className="mx-2 cursor-pointer text-sm font-semibold text-gray-900"
           >
-            2
-          </a>
-          <a
-            href="#"
-            className="mx-1 flex items-center rounded-md border border-gray-400 px-3 py-1 text-gray-900 hover:scale-105"
-          >
-            3
-          </a>
-          <a
-            href="#"
-            className="mx-1 flex items-center rounded-md border border-gray-400 px-3 py-1 text-gray-900 hover:scale-105"
-          >
-            4
-          </a>
-          <a href="#" className="mx-2 text-sm font-semibold text-gray-900">
-            <span className="hidden lg:block">Next &rarr;</span>
-            <span className="block lg:hidden">&rarr;</span>
-          </a>
+            Next &rarr;
+          </button>
         </div>
       </section>
 
