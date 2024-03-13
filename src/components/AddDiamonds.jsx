@@ -1,13 +1,26 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const AddDiamonds = () => {
-  const [name, setName] = useState("")
+  const navigate = useNavigate()
+  const [name, setName] = useState([])
   const [quality, setQuality] = useState([])
   const [cut, setCut] = useState([])
   const [color, setColor] = useState([])
   const [type, setType] = useState([])
+
+
+  const handleName = (e) => {
+    const isChaeckd = e.target.checked
+    const value = e.target.value
+    if (isChaeckd) {
+      setName((prev) => [...prev, value])
+    } else {
+      setName(name.filter((item) => item !== value))
+    }
+  }
 
   const handleCheckQuality = (e) => {
     const isChaeckd = e.target.checked
@@ -71,6 +84,7 @@ const AddDiamonds = () => {
           setCut("");
           setColor("");
           setType("");
+          navigate('/diamonds')
         })
         .catch((error) => {
           console.log('ERROR:', error);
@@ -89,17 +103,74 @@ const AddDiamonds = () => {
         <form action="#" method="POST" className="mt-1 w-full md:w-3/4 xl:w-2/4">
           <div className="space-y-5">
             <div>
-              <label htmlFor="" className="text-base font-medium text-gray-900">
-                Diamond Name :
-              </label>
-              <div className="mt-2">
-                <input
-                  value={name}
-                  className="flex h-10 w-full rounded-md border-1 bg-white bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                  type="text"
-                  placeholder="Diamond"
-                  onChange={(e) => setName(e.target.value)}
-                />
+              <div className="flex items-center justify-between">
+                <label htmlFor="" className="text-base font-medium text-gray-900">
+                  Quality of rough :
+                </label>
+              </div>
+              <div className="mt-2 flex-col gap-4">
+                <ul class="items-center w-full  text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                  <li class="w-full hover:shadow-xl hover:bg-gray-100   border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                      <input id="Rough-checkbox-list" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        value="Rough"
+                        onChange={handleName}
+                        checked={name.includes("Rough")}
+                      />
+                      <label for="Rough-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Rough
+                      </label>
+                    </div>
+                  </li>
+                  <li class="w-full hover:shadow-xl hover:bg-gray-100  border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                      <input id="4p-checkbox-list" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        value="4p"
+                        onChange={handleName}
+                        checked={name.includes("4p")}
+                      />
+                      <label for="4p-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        4p
+                      </label>
+                    </div>
+                  </li>
+                  <li class="w-full hover:shadow-xl hover:bg-gray-100  border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                      <input id="Galaxy-checkbox-list" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        value="Galaxy"
+                        onChange={handleName}
+                        checked={name.includes("Galaxy")}
+                      />
+                      <label for="Galaxy-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Galaxy
+                      </label>
+                    </div>
+                  </li>
+                  <li class="w-full hover:shadow-xl hover:bg-gray-100   border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                      <input id="Polish-checkbox-list" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        value="Polish"
+                        onChange={handleName}
+                        checked={name.includes("Polish")}
+                      />
+                      <label for="Polish-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Polish
+                      </label>
+                    </div>
+                  </li>
+                  <li class="w-full hover:shadow-xl hover:bg-gray-100   border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                      <input id="Sarin-checkbox-list" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        value="Sarin"
+                        onChange={handleName}
+                        checked={name.includes("Sarin")}
+                      />
+                      <label for="Sarin-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Sarin
+                      </label>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
             {/* NOTE:Rough of Quality */}

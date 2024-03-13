@@ -14,6 +14,8 @@ import Posts from './components/Posts.jsx';
 import SellerData from './components/SellerData.jsx';
 import AddDiamonds from './components/AddDiamonds.jsx';
 import BuyerData from './components/BuyerData.jsx';
+import SellerEdit from './components/SellerEdit.jsx';
+import BuyerEdit from './components/BuyerEdit.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -25,8 +27,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route index element={<Home />} />
           <Route path="sellers" element={<Sellers />} />
           <Route path="sellers/:id" element={<SellerData />} />
+          <Route path="sellers/edit/:id" element={<SellerEdit />} />
           <Route path="buyers" element={<Buyers />} />
           <Route path="buyers/:id" element={<BuyerData />} />
+          <Route path="buyers/edit/:id" element={<BuyerEdit />} />
           <Route path="diamonds" element={<Diamonds />} />
           <Route path="posts" element={<Posts />} />
           <Route path="contracts" element={<Contracts />} />
