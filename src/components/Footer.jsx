@@ -4,40 +4,25 @@ const Footer = () => {
   return (
     <section className="relative overflow-hidden bg-white py-8">
       <div className="container relative z-10 mx-auto px-4">
-        <div className="-m-8 flex flex-wrap items-center justify-between">
-          <div className="w-auto p-8">
-            <a href="#">
-              <div className="inline-flex items-center">
+        <div className="-m-8 flex flex-wrap align-middle justify-between">
+          <div className="w-auto py-8">
+            <div className="p-5">
+              <div className="flex items-center align-middle justify-center">
                 <img src="logo.png" alt="logo" width={50} />
-                <span className="ml-4 text-lg font-bold">Omni</span>
+                <span className="ml-4 text-lg font-bold">Omni Market</span>
               </div>
-            </a>
+            </div>
           </div>
-          <div className="w-auto p-8">
-            <ul className="-m-5 flex flex-wrap items-center">
-              <li className="p-5">
-                <a className="font-medium text-gray-600 hover:text-gray-700" href="#">
-                  Privacy Policy
+          <div className="w-auto py-8">
+            <div className=" flex flex-wrap items-center align-middle justify-center">
+              <div className="p-5">
+                <a className="font-medium text-sm text-gray-600 hover:text-gray-700" href="#">
+                  "Omni Market™ © All Rights Reserved - Transforming the Diamond Industry"
                 </a>
-              </li>
-              <li className="p-5">
-                <a className="font-medium text-gray-600 hover:text-gray-700" href="#">
-                  Terms of Service
-                </a>
-              </li>
-              <li className="p-5">
-                <a className="font-medium text-gray-600 hover:text-gray-700" href="#">
-                  Return Policy
-                </a>
-              </li>
-              <li className="p-5">
-                <a className="font-medium text-gray-600 hover:text-gray-700" href="#">
-                  Contact Us
-                </a>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
-          <div className="w-auto p-8">
+          {/* <div className="w-auto p-8">
             <div className="-m-1.5 flex flex-wrap">
               <div className="w-auto p-1.5">
                 <a href="#">
@@ -94,7 +79,7 @@ const Footer = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

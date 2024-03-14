@@ -96,9 +96,7 @@ const AddDiamonds = () => {
   return (
     <section className="mx-auto max-w-7xl px-4 py-4">
       <Toaster />
-      <div>
-        <h2 className="text-lg font-semibold">Add new diamond </h2>
-      </div>
+      <h2 className="text-lg ms-1 font-semibold">Add new diamond </h2>
       <div className="flex items-center justify-center px-4 sm:px-6 md:py-3 lg:px-8 lg:py-10">
         <form action="#" method="POST" className="mt-1 w-full md:w-3/4 xl:w-2/4">
           <div className="space-y-5">

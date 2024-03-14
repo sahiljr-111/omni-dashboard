@@ -42,7 +42,7 @@ const Buyers = () => {
             <div>
               <h2 className="text-lg font-semibold">Buyer </h2>
               <p className="mt-1 text-sm text-gray-700">
-                This is a list of all sellers. You can see existing seller with clicking on any seller row after you edit or delete existing ones.
+                This is a list of all sellers. You can see existing seller with clicking on any buyer row after you edit or delete existing ones.
               </p>
             </div>
             <div className='flex items-center relative'>
@@ -113,7 +113,7 @@ const Buyers = () => {
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className="mx-1 cursor-pointer text-sm font-semibold text-gray-900"
+              className={currentPage === 1 ? `mx-1 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-1  text-sm font-semibold text-gray-900`}
             >
               &larr; Previous
             </button>
@@ -130,7 +130,7 @@ const Buyers = () => {
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === Math.ceil(buyer.length / itemsPerPage)}
-              className="mx-2 cursor-pointer text-sm font-semibold text-gray-900"
+              className={currentPage === Math.ceil(buyer.length / itemsPerPage) ? `mx-2 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-2 cursor-pointer text-sm font-semibold text-gray-900`}
             >
               Next &rarr;
             </button>

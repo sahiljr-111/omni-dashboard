@@ -1,21 +1,20 @@
 import axios from 'axios'
-import { ArrowUpRight } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
-const Posts = () => {
+const Bids = () => {
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const [posts, setPosts] = useState([])
+  const [bids, setBids] = useState([])
   const [loading, setLoading] = useState(true)
-
 
   useEffect(() => {
     var token = localStorage.getItem('token')
-    axios.get('http://localhost:8080/admin/viewPosts', { headers: { "authentication": token } })
+    axios.get('http://localhost:8080/admin/viewBids', { headers: { "authentication": token } })
       .then((response) => {
         console.log(response.data.data);
-        setPosts(response.data.data)
+        setBids(response.data.data)
         setLoading(false)
       })
       .catch((error) => {
@@ -25,16 +24,16 @@ const Posts = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentPeople = posts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentPeople = bids.slice(indexOfFirstItem, indexOfLastItem);
   return (
     loading ? <div className='m-5 font-2xl text-center'> Loading...</div> :
       <>
         <section className="mx-auto max-w-7xl px-4 py-4">
           <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
             <div>
-              <h2 className="text-lg font-semibold">Posts </h2>
+              <h2 className="text-lg font-semibold">Bids </h2>
               <p className="mt-1 text-sm text-gray-700">
-                This is a list of all seller posts. You can see all the posts in listing.
+                This is a list of all seller bids. You can see all the bids in listing.
               </p>
             </div>
             <div>
@@ -42,7 +41,7 @@ const Posts = () => {
                 type="button"
                 className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
               >
-                Add new Posts
+                Add new Bids
               </button>
             </div>
           </div>
@@ -54,32 +53,26 @@ const Posts = () => {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Buyer Id</span>
+                    <span className='font-bold'>Seller Id</span>
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Diamond Name</span>
+                    <span className='font-bold'>Bid amount</span>
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Rough Quality</span>
+                    <span className='font-bold'>Diamond Category</span>
                   </th>
 
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Diamond Cuts</span>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
-                  >
-                    <span className='font-bold'>Polish Types</span>
+                    <span className='font-bold'>Rough Quality</span>
                   </th>
                   <th
                     scope="col"
@@ -91,19 +84,13 @@ const Posts = () => {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Caret</span>
+                    <span className='font-bold'>Polish Types</span>
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
+                    className="px-3 py-3.5 text-center text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Quantity</span>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
-                  >
-                    <span className='font-bold'>Rating</span>
+                    <span className='font-bold'>Start / End Date</span>
                   </th>
                 </tr>
               </thead>
@@ -111,32 +98,27 @@ const Posts = () => {
                 {currentPeople.map((item, index) => (
                   <tr className='hover:bg-gray-50 cursor-pointer'>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">#{item?.buyer_id.substr(-4)}</div>
+                      <div className="text-sm text-gray-800 font-semibold">#{item?.seller_id.substr(-4)}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.diamond_name?.map((name) => (<span>{name}, </span>))}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item.bid_amount}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm  text-gray-800 font-semibold ">{item.quality_of_rough?.map((rough) => (<span>{rough}, </span>))}</div>
+                      <div className="text-sm  text-gray-800 font-semibold ">{item.diamond_category}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.cut_of_diamond?.map((cut) => (<span>{cut}, </span>))}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item.rough_quality}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.polish_color?.map((color) => (<span>{color}, </span>))}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item.polish_color}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.polish_type?.map((type) => (<span>{type}, </span>))}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item.polish_type}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.diamond_karate}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item.start_date}{"/"}{item.end_date}</div>
                     </td>
-                    <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.diamond_qty}</div>
-                    </td>
-                    <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.rating}</div>
-                    </td>
+
                   </tr>
                 ))}
               </tbody>
@@ -150,7 +132,7 @@ const Posts = () => {
             >
               &larr; Previous
             </button>
-            {Array.from({ length: Math.ceil(posts.length / itemsPerPage) }, (_, index) => (
+            {Array.from({ length: Math.ceil(bids.length / itemsPerPage) }, (_, index) => (
               <button
                 key={index + 1}
                 onClick={() => setCurrentPage(index + 1)}
@@ -162,8 +144,8 @@ const Posts = () => {
             ))}
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={currentPage === Math.ceil(posts.length / itemsPerPage)}
-              className={currentPage === Math.ceil(posts.length / itemsPerPage) ? `mx-2 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-2 cursor-pointer text-sm font-semibold text-gray-900`}
+              disabled={currentPage === Math.ceil(bids.length / itemsPerPage)}
+              className={currentPage === Math.ceil(bids.length / itemsPerPage) ? `mx-2 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-2 cursor-pointer text-sm font-semibold text-gray-900`}
             >
               Next &rarr;
             </button>
@@ -174,4 +156,4 @@ const Posts = () => {
   )
 }
 
-export default Posts
+export default Bids

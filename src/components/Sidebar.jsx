@@ -1,5 +1,5 @@
 import React from 'react'
-import { BarChart, Newspaper, LogOut, Users, UserCog, GemIcon, NotebookTabs } from 'lucide-react'
+import { BarChart, Newspaper, LogOut, Users, UserCog, GemIcon, NotebookTabs, Trash2, Captions, ClipboardList } from 'lucide-react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuthContext } from '../context/useAuthContext';
@@ -69,10 +69,24 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               className={({ isActive }) => isActive ? "flex bg-black text-white transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-gray-900 hover:text-gray-100" : "flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"}
+              to="/bids"
+            >
+              <ClipboardList className="h-5 w-5" aria-hidden="true" />
+              <span className="mx-2 text-sm font-medium">Bids</span>
+            </NavLink>
+            <NavLink
+              className={({ isActive }) => isActive ? "flex bg-black text-white transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-gray-900 hover:text-gray-100" : "flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"}
               to="/contracts"
             >
               <NotebookTabs className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-sm font-medium">Contracts</span>
+            </NavLink>
+            <NavLink
+              className={({ isActive }) => isActive ? "flex bg-black text-white transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-gray-900 hover:text-gray-100" : "flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"}
+              to="/trash"
+            >
+              <Trash2 className="h-5 w-5" aria-hidden="true" />
+              <span className="mx-2 text-sm font-medium">Recycle bin</span>
             </NavLink>
           </div>
         </nav>

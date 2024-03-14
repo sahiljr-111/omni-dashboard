@@ -116,7 +116,7 @@ const Diamonds = () => {
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className="mx-1 cursor-pointer text-sm font-semibold text-gray-900"
+              className={currentPage === 1 ? `mx-1 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-1  text-sm font-semibold text-gray-900`}
             >
               &larr; Previous
             </button>
@@ -133,7 +133,7 @@ const Diamonds = () => {
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === Math.ceil(diamond.length / itemsPerPage)}
-              className="mx-2 cursor-pointer text-sm font-semibold text-gray-900"
+              className={currentPage === Math.ceil(diamond.length / itemsPerPage) ? `mx-2 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-2 cursor-pointer text-sm font-semibold text-gray-900`}
             >
               Next &rarr;
             </button>

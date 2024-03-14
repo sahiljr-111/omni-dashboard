@@ -111,7 +111,6 @@ const BuyerEdit = () => {
               <button className='bg-blue-900 w-full  px-5 py-2 text-white rounded-md' onClick={handleSubmit}>Update</button>
             </div>
           </div>
-
         </form>
       </div>
     </div>

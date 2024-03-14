@@ -1,58 +1,78 @@
-import axios from 'axios';
-import { Search, SearchCheckIcon, SearchIcon } from 'lucide-react';
+import axios from 'axios'
+import { SearchIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-const Sellers = () => {
+import toast, { Toaster } from 'react-hot-toast';
+
+const Trash = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const navigate = useNavigate()
-
-  const [seller, setSeller] = useState([])
-
   const [search, setSearch] = useState([])
   const [searchText, setSearchText] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState([])
+  const token = localStorage.getItem('token')
+  const [stateDelete, setStateDelete] = useState(false)
 
 
   useEffect(() => {
-    var token = localStorage.getItem('token')
-    axios.get(`http://localhost:8080/admin/allSeller`, { headers: { "authentication": token } })
+    axios.get('http://localhost:8080/admin/delete/client', { headers: { "authentication": token } })
       .then((response) => {
-        console.log(response.data.data);
-        setSeller(response.data.data)
+        console.log(response.data.data)
+        setData(response.data.data)
         setSearch(response.data.data)
-        setLoading(false)
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err)
+        if (data.length == 1) {
+          window.location.reload()
+        }
       })
+  }, [stateDelete])
 
-  }, [])
+  const handleRestore = (id) => {
+    axios.get(`http://localhost:8080/admin/restore/client/${id}`, { headers: { "authentication": token } })
+      .then((response) => {
+        console.log('Restored successfully');
+        setStateDelete(prevState => !prevState)
+        toast.success("Client Removed successfully!")
+      })
+      .catch((err) => {
+        window.location.reload()
+        console.log(err)
+        setStateDelete(prevState => !prevState)
+        toast.error("Something went wrong!")
+      })
+  }
 
   const handleChange = (e) => {
     setSearchText(e.target.value)
-    const filter = seller.filter((seller) => seller.name.toLowerCase().includes(e.target.value.toLowerCase()))
+    const filter = data.filter((data) => data.name.toLowerCase().includes(e.target.value.toLowerCase()))
     setSearch(filter)
+  }
+
+  const handlePremenentDelete = (id) => {
+    toast.success('permenently Deleted')
   }
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPeople = search.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
-    loading ? <div className='m-5 font-2xl text-center'> Loading...</div> :
+    currentPeople == '' ? <div className='mx-auto font-bold max-w-7xl px-4 py-4 text-center'>Recycle bin is Empty</div> :
       <>
         <div className='mx-auto max-w-7xl px-4 py-4'>
+          <Toaster />
           <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
             <div>
-              <h2 className="text-lg font-semibold">Seller </h2>
+              <h2 className="text-lg font-semibold">Deleted client </h2>
               <p className="mt-1 text-sm text-gray-700">
-                This is a list of all sellers. You can see existing seller with clicking on any seller row after you edit or delete existing ones.
+                This is a list of all Deleted clients. You can see list and searching perticular seller and remove from delete list.
               </p>
             </div>
             <div className='flex items-center relative'>
               <input
                 type="text"
-                placeholder='search seller'
+                placeholder='search client'
                 className="rounded-md px-3 py-2 text-sm font-semibold  shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 onChange={handleChange}
                 value={searchText}
@@ -76,37 +96,57 @@ const Sellers = () => {
                     scope="col"
                     className="px-4 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Seller Name</span>
+                    <span className='font-bold'>Name</span>
                   </th>
                   <th
                     scope="col"
                     className="px-4 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Seller Email</span>
+                    <span className='font-bold'>Email</span>
                   </th>
 
                   <th
                     scope="col"
                     className="px-6 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Seller Contact</span>
+                    <span className='font-bold'>Contact</span>
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3.5 text-cemter text-sm font-normal text-gray-500"
+                  >
+                    <span className='font-bold'>Action</span>
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
                 {currentPeople.map((item, index) => (
-                  <tr key={item._id} className='hover:bg-gray-50 cursor-pointer' onClick={() => navigate(`/sellers/${item._id}`)}>
+                  <tr key={item._id} className='hover:bg-gray-50 cursor-pointer'>
                     <td className="whitespace-nowrap py-5 px-3.5 ">
-                      <div className=" text-gray-800 font-semibold">#{item._id.substr(-4)}</div>
+                      <div className=" text-gray-800 font-semibold">#{item?._id.substr(-4)}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className=" text-gray-800 font-semibold ">{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</div>
+                      <div className=" text-gray-800 font-semibold ">{item?.name.charAt(0).toUpperCase() + item.name.slice(1)}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className=" text-gray-800 font-semibold">{item.email}</div>
+                      <div className=" text-gray-800 font-semibold">{item?.email}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className=" text-gray-800 font-semibold">{item.contact}</div>
+                      <div className=" text-gray-800 font-semibold">{item?.contact}</div>
+                    </td>
+                    <td className="whitespace-nowrap flex justify-center gap-1 py-5 px-3.5 text-center">
+                      <button
+                        className="border border-green-900 px-3 py-1 text-green-900 hover:bg-green-900  hover:text-white ease-in rounded-md"
+                        onClick={() => { handleRestore(item?._id); }}
+                      >
+                        Restore
+                      </button>
+                      <button
+                        className="border border-red-900 px-3 py-1 bg-red-900 hover:bg-red-800 text-white ease-in rounded-md"
+                        onClick={() => { handlePremenentDelete(item?._id); }}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -117,11 +157,11 @@ const Sellers = () => {
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className={currentPage === 1 ? `mx-1 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-1  text-sm font-semibold text-gray-900`}
+              className="mx-1 cursor-pointer text-sm font-semibold text-gray-900"
             >
               &larr; Previous
             </button>
-            {Array.from({ length: Math.ceil(seller.length / itemsPerPage) }, (_, index) => (
+            {Array.from({ length: Math.ceil(data.length / itemsPerPage) }, (_, index) => (
               <button
                 key={index + 1}
                 onClick={() => setCurrentPage(index + 1)}
@@ -133,8 +173,8 @@ const Sellers = () => {
             ))}
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={currentPage === Math.ceil(seller.length / itemsPerPage)}
-              className={currentPage === Math.ceil(seller.length / itemsPerPage) ? `mx-2 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-2 cursor-pointer text-sm font-semibold text-gray-900`}
+              disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
+              className="mx-2 cursor-pointer text-sm font-semibold text-gray-900"
             >
               Next &rarr;
             </button>
@@ -145,4 +185,4 @@ const Sellers = () => {
   )
 }
 
-export default Sellers
+export default Trash
