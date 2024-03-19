@@ -72,6 +72,12 @@ const Buyers = () => {
                     scope="col"
                     className="px-4 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
+                    <span className='font-bold'>Profile</span>
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-4 py-3.5 text-left text-sm font-normal text-gray-500"
+                  >
                     <span className='font-bold'>Buyer Name</span>
                   </th>
                   <th
@@ -95,6 +101,19 @@ const Buyers = () => {
                     <td className="whitespace-nowrap py-5 px-3.5">
                       <div className="text-md text-gray-800 font-semibold">#{item._id.substr(-4)}</div>
                     </td>
+                    {
+                      item?.profile == null ?
+                        <td className="whitespace-nowrap py-5 px-3.5">
+                          <div className=" text-gray-800 font-semibold">
+                            <img className="rounded-full" src="profile-user.png" alt="*profile" width={35} />
+                          </div>
+                        </td> :
+                        <td className="whitespace-nowrap py-5 px-3.5">
+                          <div className=" text-gray-800 font-semibold ">
+                            <img className="rounded-full" src={item?.profile} alt="*profile" width={35} />
+                          </div>
+                        </td>
+                    }
                     <td className="whitespace-nowrap py-5 px-3.5">
                       <div className="text-md  text-gray-800 font-semibold ">{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</div>
                     </td>

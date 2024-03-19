@@ -65,7 +65,16 @@ const SellerData = () => {
       <Toaster />
       <h2 className="text-lg ms-1 font-semibold">Seller Details</h2>
       <div className="mt-8 p-8 overflow-hidden text-md  rounded-lg shadow-lg bg-white border-gray-300 md:flex-row">
-        <h2 className='text-gray-500'>#{data?._id}</h2>
+        <div className='flex align-middle gap-2'>
+          {
+            data && data.profile == null
+              ?
+              <img src="/profile-user.png" alt="*profile" width={35} />
+              :
+              <img src={data?.profile} alt="*profile" width={35} />
+          }
+          <span className='text-gray-500 self-center'>#{data?._id}</span>
+        </div>
         <div className="py-8">
           <div className="mb-5 py-5 flex flex-col gap-5 text-center  items-center justify-between w-full rounded-md  flex-wrap overflow-hidden lg:flex-row lg:text-left">
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-1">
