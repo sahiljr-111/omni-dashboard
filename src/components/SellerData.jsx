@@ -13,7 +13,7 @@ const SellerData = () => {
   useEffect(() => {
     axios.get(`http://localhost:8080/admin/seller-details/${params.id}`, { headers: { "authentication": token } })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setData(response.data.data)
         if (response.data.data.isDeleted == true) {
           setBtnName("Restore")
@@ -44,7 +44,7 @@ const SellerData = () => {
       } else {
         axios.delete(`http://localhost:8080/admin/delete/seller/${params.id}`, { headers: { "authentication": token } })
           .then((response) => {
-            console.log(response)
+            // console.log(response)
             toast.success('Seller deleted!')
             setBtnName("Restore")
           })

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Home, Link } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
-import { useAuthContext } from '../context/useAuthContext'
-import { AuthContext } from '../context/AuthContext'
 const Header = () => {
-  const { user } = useAuthContext(AuthContext)
-
+  // const { user } = useAuthContext(AuthContext)
+  var user;
+  if (localStorage.getItem('user') != '') {
+    user = JSON.parse(localStorage.getItem('user'))
+  }
   const location = useLocation()
   let curruntLink = ''
   const crumps = location.pathname.split('/')

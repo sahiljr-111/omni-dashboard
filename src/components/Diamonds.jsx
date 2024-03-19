@@ -16,7 +16,7 @@ const Diamonds = () => {
     var token = localStorage.getItem('token')
     axios.get('http://localhost:8080/admin/viewDiamond', { headers: { "authentication": token } })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setDiamond(response.data.data)
         setLoading(false)
       })

@@ -12,12 +12,11 @@ const Buyers = () => {
   const [searchText, setSearchText] = useState('')
   const [loading, setLoading] = useState(true)
 
-
   useEffect(() => {
     var token = localStorage.getItem('token')
     axios.get('http://localhost:8080/admin/allBuyer', { headers: { "authentication": token } })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setBuyer(response.data.data)
         setSearch(response.data.data)
         setLoading(false)

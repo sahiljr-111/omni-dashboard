@@ -17,7 +17,7 @@ const SellerEdit = () => {
   useEffect(() => {
     axios.get(`http://localhost:8080/admin/seller-details/${params.id}`, { headers: { "authentication": token } })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         if (response.data.data.isDeleted != true) {
           setId(response.data.data._id)
           setName(response.data.data.name)
@@ -125,7 +125,7 @@ const SellerEdit = () => {
                         onChange={handleName}
                         checked={catname.includes("Rough")}
                       />
-                      <label for="Rough-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <label htmlFor="Rough-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                         Rough
                       </label>
                     </div>
@@ -137,7 +137,7 @@ const SellerEdit = () => {
                         onChange={handleName}
                         checked={catname.includes("4p")}
                       />
-                      <label for="4p-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <label htmlFor="4p-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                         4p
                       </label>
                     </div>
@@ -149,7 +149,7 @@ const SellerEdit = () => {
                         onChange={handleName}
                         checked={catname.includes("Galaxy")}
                       />
-                      <label for="Galaxy-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <label htmlFfor="Galaxy-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                         Galaxy
                       </label>
                     </div>
@@ -161,7 +161,7 @@ const SellerEdit = () => {
                         onChange={handleName}
                         checked={catname.includes("Polish")}
                       />
-                      <label for="Polish-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <label htmlFor="Polish-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                         Polish
                       </label>
                     </div>
@@ -173,7 +173,7 @@ const SellerEdit = () => {
                         onChange={handleName}
                         checked={catname.includes("Sarin")}
                       />
-                      <label for="Sarin-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <label htmlFor="Sarin-checkbox-list" class="w-full hover:cursor-pointer py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                         Sarin
                       </label>
                     </div>

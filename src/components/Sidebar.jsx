@@ -2,10 +2,11 @@ import React from 'react'
 import { BarChart, Newspaper, LogOut, Users, UserCog, GemIcon, NotebookTabs, Trash2, Captions, ClipboardList } from 'lucide-react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-import { useAuthContext } from '../context/useAuthContext';
 import '../App.css'
+import { useCookies } from 'react-cookie';
 const Sidebar = () => {
-  const { dispatch } = useAuthContext()
+  const [cookies, setCookie, removeCookie] = useCookies()
+  // const { dispatch } = useAuthContext()
   const navigate = useNavigate()
   const handleLogout = () => {
     toast.loading('logging out...', { duration: 1000 })
@@ -13,9 +14,11 @@ const Sidebar = () => {
       toast.success('logout Success!', { duration: 1000 })
     }, 1500)
     setTimeout(() => {
-      localStorage.removeItem('user')
-      localStorage.removeItem('token')
-      dispatch({ type: 'LOGOUT' })
+      setCookie('user', '')
+      setCookie('token', '')
+      localStorage.setItem('user', '')
+      localStorage.setItem('token', '')
+      // dispatch({ type: 'LOGOUT' })
       navigate('/login')
     }, 1000)
   }
@@ -93,7 +96,7 @@ const Sidebar = () => {
       </div>
       <div>
         <button
-          className='inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80'
+          className='inline-flex mt-10 w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80'
           onClick={() => { handleLogout() }}
         >
           Logout

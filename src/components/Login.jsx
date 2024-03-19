@@ -3,19 +3,16 @@ import { ArrowRight } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 import { json, redirect, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useAuthContext } from '../context/useAuthContext'
-import { AuthContext } from '../context/AuthContext'
 
 const Login = () => {
-  const { dispatch } = useAuthContext()
   const navigate = useNavigate()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [loading, setLoading] = useState(false)
 
-  const { user } = useAuthContext(AuthContext)
   useEffect(() => {
-    if (user !== null) {
+    const user = localStorage.getItem('user')
+    if (user !== '') {
       setTimeout(() => {
         toast('You are already logged in!', {
           icon: '⚠️',
@@ -34,10 +31,13 @@ const Login = () => {
         toast('Welcome Buddy!', { duration: 1000, icon: '👏' })
       }, 1500)
       setTimeout(() => {
-        console.log(response.data.data[0]);
+        // console.log(response.data.data[0]);
+        //cookie
+        setCookie('user', JSON.stringify(response.data.data[0]));
+        setCookie('token', response.data.token)
         localStorage.setItem('user', JSON.stringify(response.data.data[0]))
         localStorage.setItem('token', response.data.token)
-        dispatch({ type: 'LOGIN', payload: response.data.data[0] })
+        // dispatch({ type: 'LOGIN', payload: response.data.data[0] })
         navigate('/')
       }, 1000)
     }).catch((error) => {

@@ -13,7 +13,7 @@ const Bids = () => {
     var token = localStorage.getItem('token')
     axios.get('http://localhost:8080/admin/viewBids', { headers: { "authentication": token } })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setBids(response.data.data)
         setLoading(false)
       })
@@ -104,16 +104,16 @@ const Bids = () => {
                       <div className="text-sm text-gray-800 font-semibold">{item.bid_amount}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm  text-gray-800 font-semibold ">{item.diamond_category}</div>
+                      <div className="text-sm  text-gray-800 font-semibold ">{item.diamond_category.map((item) => <span>{item}, </span>)}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.rough_quality}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item.rough_quality.map((item) => <span>{item}, </span>)}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.polish_color}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item.polish_color.map((item) => <span>{item}, </span>)}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.polish_type}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item.polish_type.map((item) => <span>{item}, </span>)}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
                       <div className="text-sm text-gray-800 font-semibold">{item.start_date}{"/"}{item.end_date}</div>

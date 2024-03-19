@@ -6,17 +6,33 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
-import { AuthContext } from './context/AuthContext'
-import { useAuthContext } from './context/useAuthContext'
+import { useCookies } from 'react-cookie'
 
 function App() {
+  const [cookies, setCookies] = useCookies()
   const navigate = useNavigate();
-  const { user } = useAuthContext(AuthContext)
   useEffect(() => {
-    if (user == null) {
+    const user = localStorage.getItem('user')
+    const token = localStorage.getItem('token')
+    if (user && token) {
+      if (user == '' && token === '') {
+        setCookies('user', '')
+        setCookies('token', '')
+        localStorage.setItem('user', '')
+        localStorage.setItem('token', '')
+        navigate('/login');
+      }
+    } else {
+      setCookies('user', '')
+      setCookies('token', '')
+      localStorage.setItem('user', '')
+      localStorage.setItem('token', '')
       navigate('/login');
     }
-  }, [user])
+    // console.log('->cookies --->', cookies);
+    // console.log(localStorage)
+
+  }, [])
 
   return (
     <>

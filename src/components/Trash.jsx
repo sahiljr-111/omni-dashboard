@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { SearchIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Trash = () => {
@@ -9,10 +10,10 @@ const Trash = () => {
   const [search, setSearch] = useState([])
   const [searchText, setSearchText] = useState('')
   const [data, setData] = useState([])
-  const token = localStorage.getItem('token')
   const [stateDelete, setStateDelete] = useState(false)
+  const [cookies, setCookies] = useCookies()
 
-
+  const token = cookies.token
   useEffect(() => {
     axios.get('http://localhost:8080/admin/delete/client', { headers: { "authentication": token } })
       .then((response) => {

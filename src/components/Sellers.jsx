@@ -18,7 +18,7 @@ const Sellers = () => {
     var token = localStorage.getItem('token')
     axios.get(`http://localhost:8080/admin/allSeller`, { headers: { "authentication": token } })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setSeller(response.data.data)
         setSearch(response.data.data)
         setLoading(false)

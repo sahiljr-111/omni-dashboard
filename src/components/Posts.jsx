@@ -14,7 +14,7 @@ const Posts = () => {
     var token = localStorage.getItem('token')
     axios.get('http://localhost:8080/admin/viewPosts', { headers: { "authentication": token } })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setPosts(response.data.data)
         setLoading(false)
       })

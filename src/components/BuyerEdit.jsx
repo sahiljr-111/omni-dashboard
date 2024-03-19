@@ -15,7 +15,7 @@ const BuyerEdit = () => {
   useEffect(() => {
     axios.get(`http://localhost:8080/admin/buyer-details/${params.id}`, { headers: { "authentication": token } })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         if (response.data.data.isDeleted != true) {
           setName(response.data.data.name)
           setEmail(response.data.data.email)
