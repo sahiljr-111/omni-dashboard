@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Search, SearchCheckIcon, SearchIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 const Sellers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -16,7 +17,7 @@ const Sellers = () => {
 
   useEffect(() => {
     var token = localStorage.getItem('token')
-    axios.get(`http://localhost:8080/admin/allSeller`, { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/allSeller`, { headers: { "authentication": token } })
       .then((response) => {
         // console.log(response.data.data);
         setSeller(response.data.data)

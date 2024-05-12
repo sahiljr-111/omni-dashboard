@@ -18,6 +18,8 @@ import SellerEdit from './components/SellerEdit.jsx';
 import BuyerEdit from './components/BuyerEdit.jsx';
 import Trash from './components/Trash.jsx';
 import Bids from './components/Bids.jsx';
+import Reviews from './components/Reviews.jsx';
+import ContractData from './components/ContractData.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -37,6 +39,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="posts" element={<Posts />} />
         <Route path="bids" element={<Bids />} />
         <Route path="contracts" element={<Contracts />} />
+        <Route path="contracts/:id" element={<ContractData />} />
+        <Route path="reviews" element={<Reviews />} />
         <Route path='diamonds/addDiamond' element={<AddDiamonds />} />
         <Route path='trash' element={<Trash />} />
       </Route>

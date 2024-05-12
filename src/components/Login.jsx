@@ -3,12 +3,15 @@ import { ArrowRight } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 import { json, redirect, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useCookies } from 'react-cookie'
+import config from '../../config'
 
 const Login = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [loading, setLoading] = useState(false)
+  const [cookie, setCookie] = useCookies()
 
   useEffect(() => {
     const user = localStorage.getItem('user')
@@ -23,7 +26,7 @@ const Login = () => {
   }, []);
 
   const handleSubmit = () => {
-    axios.post('http://localhost:8080/admin/login', {
+    axios.post(`${config.baseURL}/admin/login`, {
       email, password
     }).then((response) => {
       toast.loading('logging in...', { duration: 1000 })

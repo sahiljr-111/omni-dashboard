@@ -3,6 +3,7 @@ import { SearchIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie';
 import toast, { Toaster } from 'react-hot-toast';
+import config from '../../config';
 
 const Trash = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,7 +16,7 @@ const Trash = () => {
 
   const token = cookies.token
   useEffect(() => {
-    axios.get('http://localhost:8080/admin/delete/client', { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/delete/client`, { headers: { "authentication": token } })
       .then((response) => {
         console.log(response.data.data)
         setData(response.data.data)
@@ -30,7 +31,7 @@ const Trash = () => {
   }, [stateDelete])
 
   const handleRestore = (id) => {
-    axios.get(`http://localhost:8080/admin/restore/client/${id}`, { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/restore/client/${id}`, { headers: { "authentication": token } })
       .then((response) => {
         console.log('Restored successfully');
         setStateDelete(prevState => !prevState)

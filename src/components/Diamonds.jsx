@@ -2,6 +2,7 @@ import axios from 'axios'
 import { ArrowUpRight } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 const Diamonds = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,7 +15,7 @@ const Diamonds = () => {
 
   useEffect(() => {
     var token = localStorage.getItem('token')
-    axios.get('http://localhost:8080/admin/viewDiamond', { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/viewDiamond`, { headers: { "authentication": token } })
       .then((response) => {
         // console.log(response.data.data);
         setDiamond(response.data.data)

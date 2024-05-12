@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { ArrowUpRight } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import config from '../../config';
 
 const Posts = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,7 +13,7 @@ const Posts = () => {
 
   useEffect(() => {
     var token = localStorage.getItem('token')
-    axios.get('http://localhost:8080/admin/viewPosts', { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/viewPosts`, { headers: { "authentication": token } })
       .then((response) => {
         // console.log(response.data.data);
         setPosts(response.data.data)

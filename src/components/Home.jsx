@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Chart1 from './charts/Chart1'
 import { UserCog, Users, Gem } from 'lucide-react'
 import axios from 'axios'
-import toast from 'react-hot-toast'
+// import toast from 'react-hot-toast'
+import config from '../../config'
 
 const Home = () => {
-
   const [seller, setSeller] = useState()
   const [buyer, setBuyer] = useState()
   const [diamonds, setDiamonds] = useState()
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     var token = localStorage.getItem('token')
-    axios.get('http://localhost:8080/admin/allSeller', { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/allSeller`, { headers: { "authentication": token } })
       .then((response) => {
         setSeller(response.data.data)
         // console.log('->response.data.data --->', response.data.data);
@@ -22,7 +22,7 @@ const Home = () => {
         console.log(error);
       })
 
-    axios.get('http://localhost:8080/admin/allBuyer', { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/allBuyer`, { headers: { "authentication": token } })
       .then((response) => {
         setBuyer(response.data.data)
       })
@@ -30,7 +30,7 @@ const Home = () => {
         console.log(error);
       })
 
-    axios.get('http://localhost:8080/admin/viewDiamond', { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/viewDiamond`, { headers: { "authentication": token } })
       .then((response) => {
         setDiamonds(response.data.data)
       })

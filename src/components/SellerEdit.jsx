@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import '../App.css'
+import config from '../../config'
 
 const SellerEdit = () => {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ const SellerEdit = () => {
 
   const token = localStorage.getItem('token')
   useEffect(() => {
-    axios.get(`http://localhost:8080/admin/seller-details/${params.id}`, { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/seller-details/${params.id}`, { headers: { "authentication": token } })
       .then((response) => {
         // console.log(response.data.data);
         if (response.data.data.isDeleted != true) {
@@ -39,7 +40,7 @@ const SellerEdit = () => {
     if (name != '' && email != '') {
       if (catname != '') {
         if (Number(contact)) {
-          axios.patch(`http://localhost:8080/admin/update/seller/${params.id}`, {
+          axios.patch(`${config.baseURL}/admin/update/seller/${params.id}`, {
             name,
             email: email.toLowerCase(),
             seller_category: catname,

@@ -2,19 +2,22 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
+import config from '../../config'
 
 const BuyerData = () => {
   const navigate = useNavigate()
   const [data, setData] = useState([])
   const [btnName, setBtnName] = useState("")
   const params = useParams()
+  const [loading, setLoading] = useState(true)
 
   const token = localStorage.getItem('token')
   useEffect(() => {
-    axios.get(`http://localhost:8080/admin/buyer-details/${params.id}`, { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/buyer-details/${params.id}`, { headers: { "authentication": token } })
       .then((response) => {
         // console.log(response.data.data);
         setData(response.data.data)
+        setLoading(false)
         if (response.data.data.isDeleted == true) {
           setBtnName("Restore")
         } else {
@@ -29,7 +32,7 @@ const BuyerData = () => {
     const handleConfirm = window.confirm(`Are you sure want to ${btnName == "Restore" ? 'Restore' : 'Delete'}`)
     if (handleConfirm) {
       if (btnName == 'Restore') {
-        axios.get(`http://localhost:8080/admin/restore/client/${id}`, { headers: { "authentication": token } })
+        axios.get(`${config.baseURL}/admin/restore/client/${id}`, { headers: { "authentication": token } })
           .then((response) => {
             console.log('restore success')
             setBtnName("Delete")
@@ -42,7 +45,7 @@ const BuyerData = () => {
           })
 
       } else {
-        axios.delete(`http://localhost:8080/admin/delete/buyer/${params.id}`, { headers: { "authentication": token } })
+        axios.delete(`${config.baseURL}/admin/delete/buyer/${params.id}`, { headers: { "authentication": token } })
           .then((response) => {
             // console.log(response)
             toast.success('Buyer deleted!')
@@ -59,6 +62,7 @@ const BuyerData = () => {
     }
   }
   return (
+    loading ? <div className='m-5 font-2xl text-center'>Loading...</div> :  
     <div className='mx-auto max-w-7xl px-4 py-4'>
       <Toaster />
       <h2 className="text-lg ms-1 font-semibold">Buyer Details</h2>
@@ -69,7 +73,7 @@ const BuyerData = () => {
               ?
               <img className="rounded-full" src="/profile-user.png" alt="*profile" width={35} />
               :
-              <img className="rounded-full" src={data?.profile} alt="*profile" width={35} />
+              <img className="rounded-full" src={data?.profile} alt="*profile" width={45} />
           }
           <span className='text-gray-500 self-center'>#{data?._id}</span>
         </div>

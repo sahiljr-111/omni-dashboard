@@ -10,12 +10,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import config from '../../../config';
 
 const Chart1 = () => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/admin/chart')
+    axios.get(`${config.baseURL}/admin/chart`)
       .then(response => {
         setChartData(response.data.data);
       })

@@ -2,21 +2,22 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import config from '../../config';
 
-const Bids = () => {
+const Reviews = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const [bids, setBids] = useState([])
+  const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     var token = localStorage.getItem('token')
-    axios.get(`${config.baseURL}/admin/viewBids`, { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/view-review`, { headers: { "authentication": token } })
       .then((response) => {
         // console.log(response.data.data);
-        setBids(response.data.data)
+        setReviews(response.data.data)
         setLoading(false)
+        console.log(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -25,25 +26,17 @@ const Bids = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentPeople = bids.slice(indexOfFirstItem, indexOfLastItem);
+  const currentPeople = reviews.slice(indexOfFirstItem, indexOfLastItem);
   return (
     loading ? <div className='m-5 font-2xl text-center'> Loading...</div> :
       <>
         <section className="mx-auto max-w-7xl px-4 py-4">
           <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
             <div>
-              <h2 className="text-lg font-semibold">Bids </h2>
+              <h2 className="text-lg font-semibold">Reviews </h2>
               <p className="mt-1 text-sm text-gray-700">
-                This is a list of all seller bids. You can see all the bids in listing.
+                This is a list of all seller's and buyer's reviews. You can see all the reviews in listing.
               </p>
-            </div>
-            <div>
-              <button
-                type="button"
-                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-              >
-                Add new Bids
-              </button>
             </div>
           </div>
           <div className="flex gap-2 mt-10 flex-wrap justify-evenly ">
@@ -54,44 +47,25 @@ const Bids = () => {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Seller Id</span>
+                    <span className='font-bold'>Review Id</span>
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Bid amount</span>
+                    <span className='font-bold'>Client name</span>
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Diamond Category</span>
-                  </th>
-
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
-                  >
-                    <span className='font-bold'>Rough Quality</span>
+                    <span className='font-bold'>Review rating</span>
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
                   >
-                    <span className='font-bold'>Polish Colors</span>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-normal text-gray-500"
-                  >
-                    <span className='font-bold'>Polish Types</span>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-center text-sm font-normal text-gray-500"
-                  >
-                    <span className='font-bold'>Start / End Date</span>
+                    <span className='font-bold'>Review message</span>
                   </th>
                 </tr>
               </thead>
@@ -99,27 +73,17 @@ const Bids = () => {
                 {currentPeople.map((item, index) => (
                   <tr className='hover:bg-gray-50 cursor-pointer'>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">#{item?.seller_id.substr(-4)}</div>
+                      <div className="text-sm text-gray-800 font-semibold">#{item?._id.substr(-4)}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.bid_amount}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item?.client_id?.name}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm  text-gray-800 font-semibold ">{item.diamond_category.map((item) => <span>{item}, </span>)}</div>
+                      <div className="text-sm text-gray-800 font-semibold">{item?.rating}</div>
                     </td>
                     <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.rough_quality.map((item) => <span>{item}, </span>)}</div>
+                      <div className="text-sm  text-gray-800 font-semibold ">{item?.message}</div>
                     </td>
-                    <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.polish_color.map((item) => <span>{item}, </span>)}</div>
-                    </td>
-                    <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.polish_type.map((item) => <span>{item}, </span>)}</div>
-                    </td>
-                    <td className="whitespace-nowrap py-5 px-3.5">
-                      <div className="text-sm text-gray-800 font-semibold">{item.start_date}{"/"}{item.end_date}</div>
-                    </td>
-
                   </tr>
                 ))}
               </tbody>
@@ -133,7 +97,7 @@ const Bids = () => {
             >
               &larr; Previous
             </button>
-            {Array.from({ length: Math.ceil(bids.length / itemsPerPage) }, (_, index) => (
+            {Array.from({ length: Math.ceil(reviews.length / itemsPerPage) }, (_, index) => (
               <button
                 key={index + 1}
                 onClick={() => setCurrentPage(index + 1)}
@@ -145,8 +109,8 @@ const Bids = () => {
             ))}
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={currentPage === Math.ceil(bids.length / itemsPerPage)}
-              className={currentPage === Math.ceil(bids.length / itemsPerPage) ? `mx-2 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-2 cursor-pointer text-sm font-semibold text-gray-900`}
+              disabled={currentPage === Math.ceil(reviews.length / itemsPerPage)}
+              className={currentPage === Math.ceil(reviews.length / itemsPerPage) ? `mx-2 cursor-not-allowed text-sm font-semibold text-gray-900` : `mx-2 cursor-pointer text-sm font-semibold text-gray-900`}
             >
               Next &rarr;
             </button>
@@ -157,4 +121,4 @@ const Bids = () => {
   )
 }
 
-export default Bids
+export default Reviews

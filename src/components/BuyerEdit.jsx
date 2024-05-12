@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
+import config from '../../config'
 
 const BuyerEdit = () => {
 
@@ -13,7 +14,7 @@ const BuyerEdit = () => {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/admin/buyer-details/${params.id}`, { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/buyer-details/${params.id}`, { headers: { "authentication": token } })
       .then((response) => {
         // console.log(response.data.data);
         if (response.data.data.isDeleted != true) {
@@ -34,7 +35,7 @@ const BuyerEdit = () => {
     e.preventDefault()
     if (name != '' && email != '') {
       if (Number(contact)) {
-        axios.patch(`http://localhost:8080/admin/update/buyer/${params.id}`, {
+        axios.patch(`${config.baseURL}/admin/update/buyer/${params.id}`, {
           name,
           email: email.toLowerCase(),
           contact

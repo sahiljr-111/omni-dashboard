@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import config from '../../config'
 
 const AddDiamonds = () => {
   const navigate = useNavigate()
@@ -65,7 +66,7 @@ const AddDiamonds = () => {
     const token = localStorage.getItem('token')
     if (name != '' && quality != '' && cut != '' && color != '' && type != '') {
 
-      axios.post('http://localhost:8080/admin/addDiamond', {
+      axios.post(`${config.baseURL}/admin/addDiamond`, {
         diamond_name: name,
         quality_of_rough: quality,
         cut_of_diamond: cut,

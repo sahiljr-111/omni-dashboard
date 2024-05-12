@@ -2,6 +2,7 @@ import axios from 'axios'
 import { ArrowUpRight, SearchIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 const Buyers = () => {
   const navigate = useNavigate()
@@ -14,7 +15,7 @@ const Buyers = () => {
 
   useEffect(() => {
     var token = localStorage.getItem('token')
-    axios.get('http://localhost:8080/admin/allBuyer', { headers: { "authentication": token } })
+    axios.get(`${config.baseURL}/admin/allBuyer`, { headers: { "authentication": token } })
       .then((response) => {
         // console.log(response.data.data);
         setBuyer(response.data.data)
@@ -103,13 +104,13 @@ const Buyers = () => {
                     {
                       item?.profile == null ?
                         <td className="whitespace-nowrap py-5 px-3.5">
-                          <div className=" text-gray-800 font-semibold">
+                          <div className=" text-gray-800 font-semibold  flex justify-center">
                             <img className="rounded-full" src="profile-user.png" alt="*profile" width={35} />
                           </div>
                         </td> :
                         <td className="whitespace-nowrap py-5 px-3.5">
-                          <div className=" text-gray-800 font-semibold ">
-                            <img className="rounded-full" src={item?.profile} alt="*profile" width={35} />
+                          <div className=" text-gray-800 font-semibold overflow-hidden h-10 rounded-full flex justify-center">
+                            <img className="rounded-full" src={item?.profile} alt="*profile" />
                           </div>
                         </td>
                     }
